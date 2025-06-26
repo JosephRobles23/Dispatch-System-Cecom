@@ -3,27 +3,36 @@ import { Box, Typography, Card, CardContent, Grid } from '@mui/material';
 
 const ReportsPanel = () => {
   const stats = [
-    { title: 'Incidencias Hoy', value: '12', color: 'primary.main' },
-    { title: 'Resueltas', value: '8', color: 'success.main' },
-    { title: 'Pendientes', value: '4', color: 'warning.main' },
-    { title: 'Agentes Activos', value: '24', color: 'info.main' },
+    { title: 'Incidencias Hoy', value: '12', color: 'blue' },
+    { title: 'Resueltas', value: '8', color: 'green' },
+    { title: 'Pendientes', value: '4', color: 'yellow' },
+    { title: 'Agentes Activos', value: '24', color: 'blue' },
   ];
 
+  const getColorClass = (color) => {
+    switch (color) {
+      case 'blue': return 'text-blue-500';
+      case 'green': return 'text-green-500';
+      case 'yellow': return 'text-yellow-500';
+      default: return 'text-blue-500';
+    }
+  };
+
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="subtitle2" sx={{ color: 'text.secondary', mb: 2 }}>
+    <Box className="p-2">
+      <Typography variant="subtitle2" className="text-slate-400 mb-2">
         Estadísticas del día
       </Typography>
       
       <Grid container spacing={2}>
         {stats.map((stat, index) => (
           <Grid item xs={12} key={index}>
-            <Card sx={{ bgcolor: 'background.paper' }}>
-              <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+            <Card className="bg-slate-800">
+              <CardContent className="p-2 last:pb-2">
+                <Typography variant="caption" className="text-slate-400">
                   {stat.title}
                 </Typography>
-                <Typography variant="h4" sx={{ color: stat.color, fontWeight: 'bold' }}>
+                <Typography variant="h4" className={`${getColorClass(stat.color)} font-bold`}>
                   {stat.value}
                 </Typography>
               </CardContent>

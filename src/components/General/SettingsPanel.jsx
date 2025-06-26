@@ -1,7 +1,10 @@
 import React from 'react';
 import { Box, List, ListItem, ListItemText, Switch, Typography, Divider } from '@mui/material';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const SettingsPanel = () => {
+  const { colors } = useTheme();
+  
   const settings = [
     { id: 1, title: 'Notificaciones Push', description: 'Recibir alertas en tiempo real', enabled: true },
     { id: 2, title: 'Modo Oscuro', description: 'Tema oscuro del sistema', enabled: true },
@@ -10,23 +13,23 @@ const SettingsPanel = () => {
   ];
 
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="subtitle2" sx={{ color: 'text.secondary', mb: 2 }}>
+    <Box className="p-2">
+      <Typography variant="subtitle2" className={`${colors.secondary} mb-2`}>
         Configuraciones del sistema
       </Typography>
       
-      <List sx={{ p: 0 }}>
+      <List className="p-0">
         {settings.map((setting, index) => (
           <React.Fragment key={setting.id}>
-            <ListItem sx={{ px: 0, py: 2 }}>
+            <ListItem className="px-0 py-2">
               <ListItemText
                 primary={
-                  <Typography variant="body2" sx={{ color: 'text.primary', fontWeight: 500 }}>
+                  <Typography variant="body2" className={`${colors.primary} font-medium`}>
                     {setting.title}
                   </Typography>
                 }
                 secondary={
-                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                  <Typography variant="caption" className={colors.secondary}>
                     {setting.description}
                   </Typography>
                 }
@@ -34,7 +37,7 @@ const SettingsPanel = () => {
               <Switch checked={setting.enabled} size="small" />
             </ListItem>
             {index < settings.length - 1 && (
-              <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+              <Divider className={colors.border.primary} />
             )}
           </React.Fragment>
         ))}

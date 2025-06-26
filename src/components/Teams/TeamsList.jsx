@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, List, ListItem, ListItemText, Chip, Typography, Avatar, Divider } from '@mui/material';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const mockTeams = [
   { id: 1, name: 'Patrulla 01', type: 'Patrullero', status: 'En servicio', agent: 'Carlos Mendoza', location: 'Sector A' },
@@ -19,44 +20,39 @@ const getStatusColor = (status) => {
 };
 
 const TeamsList = () => {
+  const { colors } = useTheme();
+
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="subtitle2" sx={{ color: 'text.secondary', mb: 2 }}>
+    <Box className="p-2">
+      <Typography variant="subtitle2" className={`${colors.secondary} mb-2`}>
         {mockTeams.length} equipos registrados
       </Typography>
       
-      <List sx={{ p: 0 }}>
+      <List className="p-0">
         {mockTeams.map((team, index) => (
           <React.Fragment key={team.id}>
-            <ListItem 
-              sx={{ 
-                px: 0,
-                py: 2,
-                cursor: 'pointer',
-                '&:hover': { bgcolor: 'rgba(255,255,255,0.02)' }
-              }}
-            >
-              <Avatar sx={{ bgcolor: 'primary.main', mr: 2, width: 32, height: 32 }}>
+            <ListItem className={`px-0 py-2 cursor-pointer ${colors.hover.primary}`}>
+              <Avatar className="bg-blue-600 mr-2 w-8 h-8">
                 {team.name.substring(0, 2)}
               </Avatar>
               <ListItemText
                 primary={
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                    <Typography variant="body2" sx={{ color: 'text.primary', fontWeight: 500 }}>
+                  <Box className="flex flex-col gap-1">
+                    <Typography variant="body2" className={`${colors.primary} font-medium`}>
                       {team.name} - {team.type}
                     </Typography>
-                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                    <Typography variant="caption" className={colors.secondary}>
                       {team.agent}
                     </Typography>
-                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                    <Box className="flex gap-1 items-center">
                       <Chip 
                         label={team.status} 
                         size="small" 
                         color={getStatusColor(team.status)}
-                        sx={{ fontSize: '0.75rem', height: 24 }}
+                        className="text-xs h-6"
                       />
                     </Box>
-                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                    <Typography variant="caption" className={colors.secondary}>
                       📍 {team.location}
                     </Typography>
                   </Box>
@@ -64,7 +60,7 @@ const TeamsList = () => {
               />
             </ListItem>
             {index < mockTeams.length - 1 && (
-              <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+              <Divider className={colors.border.primary} />
             )}
           </React.Fragment>
         ))}

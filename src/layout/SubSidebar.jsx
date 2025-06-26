@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, IconButton, Typography, Divider } from '@mui/material';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTheme } from '../contexts/ThemeContext';
 import IncidentsList from '../components/Incidents/IncidentsList';
 import TeamsList from '../components/Teams/TeamsList';
 import AlertsList from '../components/General/AlertsList';
@@ -9,6 +10,8 @@ import ReportsPanel from '../components/General/ReportsPanel';
 import SettingsPanel from '../components/General/SettingsPanel';
 
 const SubSidebar = ({ open, onToggle, activeSection }) => {
+  const { colors } = useTheme();
+  
   const getSubSidebarContent = () => {
     switch (activeSection) {
       case 'map':
@@ -42,56 +45,29 @@ const SubSidebar = ({ open, onToggle, activeSection }) => {
     return titles[activeSection] || 'Panel';
   };
 
-  // Don't show SubSidebar for reports section
-  if (activeSection === 'reports') {
-    return null;
-  }
+  // Para reports section, el SubSidebar está siempre cerrado
+  const isReportsPage = activeSection === 'reports';
+  const isActuallyOpen = open && !isReportsPage;
 
   return (
-    <Box
-      sx={{
-        width: open ? 320 : 0,
-        bgcolor: 'background.paper',
-        borderRight: open ? '1px solid rgba(255,255,255,0.1)' : 'none',
-        transition: 'width 0.3s ease',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      {open && (
+    <Box className={`${isActuallyOpen ? `w-80 ${colors.background.secondary} ${colors.border.primary} border-r` : 'w-0'} overflow-hidden flex flex-col transition-all duration-300`}>
+      {isActuallyOpen && (
         <>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 2 }}>
-            <Typography variant="h6" sx={{ color: 'text.primary', fontWeight: 600, fontSize: '1rem' }}>
+          <Box className="flex items-center justify-between p-2">
+            <Typography variant="h6" className={`${colors.primary} font-semibold text-base`}>
               {getSidebarTitle()}
             </Typography>
-            <IconButton onClick={onToggle} sx={{ color: 'text.secondary' }}>
+            <IconButton onClick={onToggle} className={`${colors.secondary} ${colors.hover.primary}`}>
               <ChevronLeft size={20} />
             </IconButton>
           </Box>
           
-          <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+          <Divider className={colors.border.primary} />
           
-          <Box sx={{ flex: 1, overflow: 'auto' }}>
+          <Box className="flex-1 overflow-auto">
             {getSubSidebarContent()}
           </Box>
         </>
-      )}
-      
-      {!open && (
-        <Box sx={{ position: 'absolute', left: -40, top: '50%', transform: 'translateY(-50%)' }}>
-          <IconButton 
-            onClick={onToggle} 
-            sx={{ 
-              bgcolor: 'background.paper', 
-              color: 'text.secondary',
-              border: '1px solid rgba(255,255,255,0.1)',
-              '&:hover': { bgcolor: 'rgba(255,255,255,0.05)' }
-            }}
-          >
-            <ChevronRight size={20} />
-          </IconButton>
-        </Box>
       )}
     </Box>
   );

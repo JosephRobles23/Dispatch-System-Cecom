@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, IconButton, Divider } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext';
 import { 
   MapPin, 
   FileText, 
@@ -26,6 +27,7 @@ const sidebarItems = [
 const Sidebar = ({ collapsed, onToggle, activeSection, onSectionChange }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { colors } = useTheme();
 
   const handleItemClick = (item) => {
     onSectionChange(item.id);
@@ -42,58 +44,46 @@ const Sidebar = ({ collapsed, onToggle, activeSection, onSectionChange }) => {
 
   return (
     <Box
-      sx={{
-        width: collapsed ? 64 : 280,
-        bgcolor: 'background.paper',
-        borderRight: '1px solid rgba(255,255,255,0.1)',
-        transition: 'width 0.3s ease',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
+      className={`${collapsed ? 'w-20' : 'w-100%'} ${colors.background.secondary} ${colors.border.primary} border-r flex flex-col overflow-hidden`}
     >
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 1 }}>
-        <IconButton onClick={onToggle} sx={{ color: 'text.secondary' }}>
+      {/* <Box className={`${collapsed ? 'justify-center' : 'justify-end'} flex  p-1`}>
+        <IconButton onClick={onToggle} className="text-slate-400">
           {collapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
         </IconButton>
-      </Box>
+      </Box> */}
       
-      <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+      <Divider className={colors.border.primary} />
       
-      <List sx={{ flex: 1, px: 1 }}>
+      <List className="flex-1 px-1">
         {sidebarItems.map((item) => {
           const IconComponent = item.icon;
           const isActive = currentActiveSection === item.id;
           
           return (
-            <ListItem key={item.id} disablePadding sx={{ display: 'block', mb: 1 }}>
+            <ListItem 
+              key={item.id} 
+              disablePadding 
+              className="block mb-1"
+            >
               <ListItemButton
                 onClick={() => handleItemClick(item)}
-                sx={{
-                  minHeight: 48,
-                  justifyContent: collapsed ? 'center' : 'initial',
-                  px: 2.5,
-                  borderRadius: 2,
-                  bgcolor: isActive ? 'primary.main' : 'transparent',
-                  color: isActive ? 'primary.contrastText' : 'text.primary',
-                  '&:hover': {
-                    bgcolor: isActive ? 'primary.dark' : 'rgba(255,255,255,0.05)',
-                  },
-                }}
+                className={`min-h-12 px-2.5 rounded-lg transition-colors ${
+                  collapsed ? 'justify-center' : 'justify-start'
+                } ${
+                  isActive 
+                    ? `${colors.button.primary} ${colors.primary}` 
+                    : `bg-transparent ${colors.primary} ${colors.hover.primary}`
+                }`}
               >
                 <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: collapsed ? 0 : 3,
-                    justifyContent: 'center',
-                    color: 'inherit',
-                  }}
+                  className={`min-w-0 ${collapsed ? 'mr-0' : 'mr-3'} justify-center text-inherit`}
                 >
                   <IconComponent size={20} />
                 </ListItemIcon>
                 <ListItemText 
                   primary={item.label} 
+                  className={`${collapsed ? 'opacity-0' : 'opacity-100'}`}
                   sx={{ 
-                    opacity: collapsed ? 0 : 1,
                     '& .MuiListItemText-primary': {
                       fontSize: '0.875rem',
                       fontWeight: isActive ? 600 : 400,

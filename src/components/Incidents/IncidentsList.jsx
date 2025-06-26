@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, List, ListItem, ListItemText, Chip, Typography, Divider } from '@mui/material';
+import { useTheme } from '../../contexts/ThemeContext';
 
 const mockIncidents = [
   { id: 1, title: 'Robo en Av. Javier Prado', status: 'En curso', priority: 'high', time: '14:30' },
@@ -27,45 +28,40 @@ const getPriorityColor = (priority) => {
 };
 
 const IncidentsList = () => {
+  const { colors } = useTheme();
+
   return (
-    <Box sx={{ p: 2 }}>
-      <Typography variant="subtitle2" sx={{ color: 'text.secondary', mb: 2 }}>
+    <Box className="p-2">
+      <Typography variant="subtitle2" className={`${colors.secondary} mb-2`}>
         {mockIncidents.length} incidencias activas
       </Typography>
       
-      <List sx={{ p: 0 }}>
+      <List className="p-0">
         {mockIncidents.map((incident, index) => (
           <React.Fragment key={incident.id}>
-            <ListItem 
-              sx={{ 
-                px: 0,
-                py: 2,
-                cursor: 'pointer',
-                '&:hover': { bgcolor: 'rgba(255,255,255,0.02)' }
-              }}
-            >
+            <ListItem className={`px-0 py-2 cursor-pointer ${colors.hover.primary}`}>
               <ListItemText
                 primary={
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                    <Typography variant="body2" sx={{ color: 'text.primary', fontWeight: 500 }}>
+                  <Box className="flex flex-col gap-1">
+                    <Typography variant="body2" className={`${colors.primary} font-medium`}>
                       {incident.title}
                     </Typography>
-                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                    <Box className="flex gap-1 items-center">
                       <Chip 
                         label={incident.status} 
                         size="small" 
                         color={getStatusColor(incident.status)}
-                        sx={{ fontSize: '0.75rem', height: 24 }}
+                        className="text-xs h-6"
                       />
                       <Chip 
                         label={incident.priority.toUpperCase()} 
                         size="small" 
                         variant="outlined"
                         color={getPriorityColor(incident.priority)}
-                        sx={{ fontSize: '0.75rem', height: 24 }}
+                        className="text-xs h-6"
                       />
                     </Box>
-                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                    <Typography variant="caption" className={colors.secondary}>
                       {incident.time}
                     </Typography>
                   </Box>
@@ -73,7 +69,7 @@ const IncidentsList = () => {
               />
             </ListItem>
             {index < mockIncidents.length - 1 && (
-              <Divider sx={{ borderColor: 'rgba(255,255,255,0.1)' }} />
+              <Divider className={colors.border.primary} />
             )}
           </React.Fragment>
         ))}

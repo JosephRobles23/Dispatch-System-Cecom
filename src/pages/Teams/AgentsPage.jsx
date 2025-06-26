@@ -1,15 +1,28 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Card, CardContent } from '@mui/material';
 
 const AgentsPage = () => {
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography variant="h4" sx={{ color: 'text.primary', mb: 3 }}>
-        Gestión de Agentes
-      </Typography>
-      <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-        Administración de agentes de serenazgo
-      </Typography>
+    <Box className="p-3 h-full pointer-events-none">
+      <Card className="bg-slate-800/95 backdrop-blur-xl border border-white/10 mb-3 pointer-events-auto">
+        <CardContent className="p-3">
+          <Typography variant="h4" className="text-white mb-2 font-bold">
+            Gestión de Agentes
+          </Typography>
+          <Typography variant="body1" className="text-slate-400">
+            Administración del personal operativo del sistema
+          </Typography>
+        </CardContent>
+      </Card>
+      
+      {/* Aquí irá el contenido específico de la página */}
+      <Card className="bg-slate-800/95 backdrop-blur-xl border border-white/10 h-[calc(100%-120px)] pointer-events-auto">
+        <CardContent className="p-3 h-full">
+          <Typography variant="body2" className="text-slate-400">
+            Contenido de gestión de agentes...
+          </Typography>
+        </CardContent>
+      </Card>
     </Box>
   );
 };

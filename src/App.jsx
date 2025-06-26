@@ -4,50 +4,54 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MainLayout from './layout/MainLayout';
 import AppRoutes from './routes/AppRoutes';
+import { ThemeProvider as CustomThemeProvider, useTheme } from './contexts/ThemeContext';
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#2563eb',
+// Componente interno que tiene acceso al tema
+const AppContent = () => {
+  const { isDarkMode } = useTheme();
+
+  const theme = createTheme({
+    palette: {
+      mode: isDarkMode ? 'dark' : 'light',
+      primary: {
+        main: '#2563eb',
+      },
+      secondary: {
+        main: '#16a34a',
+      },
+      warning: {
+        main: '#eab308',
+      },
+      background: {
+        default: isDarkMode ? '#0f172a' : '#f8fafc',
+        paper: isDarkMode ? '#1e293b' : '#ffffff',
+      },
+      text: {
+        primary: isDarkMode ? '#f1f5f9' : '#1e293b',
+        secondary: isDarkMode ? '#cbd5e1' : '#64748b',
+      },
     },
-    secondary: {
-      main: '#16a34a',
-    },
-    warning: {
-      main: '#eab308',
-    },
-    background: {
-      default: '#0f172a',
-      paper: '#1e293b',
-    },
-    text: {
-      primary: '#f1f5f9',
-      secondary: '#cbd5e1',
-    },
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          textTransform: 'none',
-          borderRadius: '8px',
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            textTransform: 'none',
+            borderRadius: '8px',
+          },
+        },
+      },
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            backgroundImage: 'none',
+          },
         },
       },
     },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          backgroundImage: 'none',
-        },
-      },
-    },
-  },
-});
+  });
 
-function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
         <MainLayout>
@@ -55,6 +59,14 @@ function App() {
         </MainLayout>
       </Router>
     </ThemeProvider>
+  );
+};
+
+function App() {
+  return (
+    <CustomThemeProvider>
+      <AppContent />
+    </CustomThemeProvider>
   );
 }
 

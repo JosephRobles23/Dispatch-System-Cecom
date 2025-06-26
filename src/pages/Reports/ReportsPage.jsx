@@ -90,7 +90,12 @@ const ReportsPage = () => {
   };
 
   return (
-    <Box sx={{ p: 3, bgcolor: 'background.default', minHeight: '100vh' }}>
+    <Box sx={{ 
+      p: 3, 
+      bgcolor: 'background.default',
+      minHeight: '100vh',
+      overflowY: 'auto'
+    }}>
       {/* Header */}
       <Box sx={{ mb: 4 }}>
         <Typography variant="h4" sx={{ color: 'text.primary', fontWeight: 'bold', mb: 1 }}>
@@ -211,10 +216,10 @@ const ReportsPage = () => {
                 </Box>
               </Box>
               <Typography variant="h4" sx={{ color: 'text.primary', fontWeight: 'bold', mb: 1 }}>
-                95%
+                96%
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1 }}>
-                Tasa de Resolución
+                Eficiencia
               </Typography>
               <Typography variant="caption" sx={{ color: 'success.main' }}>
                 +2.1% vs semana anterior
@@ -236,7 +241,7 @@ const ReportsPage = () => {
                   alignItems: 'center',
                   justifyContent: 'center'
                 }}>
-                  <Clock size={20} color="white" />
+                  <AlertTriangle size={20} color="white" />
                 </Box>
                 <Box>
                   <Typography variant="caption" sx={{ color: 'text.secondary' }}>
@@ -251,13 +256,13 @@ const ReportsPage = () => {
                 </Box>
               </Box>
               <Typography variant="h4" sx={{ color: 'text.primary', fontWeight: 'bold', mb: 1 }}>
-                8.5
+                8 min
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary', mb: 1 }}>
-                Tiempo Promedio (min)
+                Tiempo Respuesta
               </Typography>
               <Typography variant="caption" sx={{ color: 'error.main' }}>
-                +0.8 min vs semana anterior
+                +0.5 min vs semana anterior
               </Typography>
             </CardContent>
           </Card>
@@ -266,393 +271,116 @@ const ReportsPage = () => {
 
       {/* Charts Section */}
       <Grid container spacing={3} sx={{ mb: 4 }}>
-        {/* Response Time Distribution */}
-        <Grid item xs={12} md={4}>
-          <Card sx={{ bgcolor: 'background.paper', height: '400px' }}>
-            <CardContent sx={{ p: 3, height: '100%' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                <Box sx={{ 
-                  bgcolor: 'info.main', 
-                  borderRadius: 2, 
-                  p: 1, 
-                  mr: 2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <AlertTriangle size={16} color="white" />
-                </Box>
-                <Box>
-                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                    Esta Semana
-                  </Typography>
-                  <FormControl size="small" sx={{ ml: 1 }}>
-                    <Select value="week" sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>
-                      <MenuItem value="week">Esta Semana</MenuItem>
-                      <MenuItem value="month">Este Mes</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Box>
-              
-              <Typography variant="h4" sx={{ color: 'text.primary', fontWeight: 'bold', mb: 1 }}>
-                Distribución por Prioridad
-              </Typography>
-              
-              <Box sx={{ height: 250, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={responseTimeData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={100}
-                      paddingAngle={5}
-                      dataKey="value"
-                    >
-                      {responseTimeData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                  </PieChart>
-                </ResponsiveContainer>
-              </Box>
-              
-              <Box sx={{ mt: 2 }}>
-                {responseTimeData.map((item, index) => (
-                  <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                    <Box sx={{ 
-                      width: 12, 
-                      height: 12, 
-                      bgcolor: item.color, 
-                      borderRadius: '50%', 
-                      mr: 1 
-                    }} />
-                    <Typography variant="caption" sx={{ color: 'text.secondary', mr: 1 }}>
-                      {item.name}
-                    </Typography>
-                    <Typography variant="caption" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-                      {item.value}%
-                    </Typography>
-                  </Box>
-                ))}
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Products Overview */}
-        <Grid item xs={12} md={4}>
-          <Card sx={{ bgcolor: 'primary.main', height: '400px', color: 'white' }}>
-            <CardContent sx={{ p: 3, height: '100%' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                <Box sx={{ 
-                  bgcolor: 'rgba(255,255,255,0.2)', 
-                  borderRadius: 2, 
-                  p: 1, 
-                  mr: 2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <Shield size={16} color="white" />
-                </Box>
-                <Box>
-                  <Typography variant="subtitle2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                    Esta Semana
-                  </Typography>
-                  <FormControl size="small" sx={{ ml: 1 }}>
-                    <Select 
-                      value="week" 
-                      sx={{ 
-                        fontSize: '0.75rem', 
-                        color: 'rgba(255,255,255,0.8)',
-                        '& .MuiOutlinedInput-notchedOutline': {
-                          borderColor: 'rgba(255,255,255,0.3)'
-                        }
-                      }}
-                    >
-                      <MenuItem value="week">Esta Semana</MenuItem>
-                      <MenuItem value="month">Este Mes</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Box>
-              
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-                <Box>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                    Total Equipos
-                  </Typography>
-                  <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-                    18
-                  </Typography>
-                </Box>
-                <Box sx={{ textAlign: 'right' }}>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                    En Servicio
-                  </Typography>
-                  <Typography variant="h3" sx={{ fontWeight: 'bold' }}>
-                    15
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                    83%
-                  </Typography>
-                </Box>
-              </Box>
-
-              <Box sx={{ mt: 4 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                    Patrulleros
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                    12/15
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                    Motorizados
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                    3/3
-                  </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                    Mantenimiento
-                  </Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                    3
-                  </Typography>
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-
-        {/* Abandoned Cart */}
-        <Grid item xs={12} md={4}>
-          <Card sx={{ bgcolor: 'background.paper', height: '400px' }}>
-            <CardContent sx={{ p: 3, height: '100%' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                <Box sx={{ 
-                  bgcolor: 'warning.main', 
-                  borderRadius: 2, 
-                  p: 1, 
-                  mr: 2,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <XCircle size={16} color="white" />
-                </Box>
-                <Box>
-                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                    Esta Semana
-                  </Typography>
-                  <FormControl size="small" sx={{ ml: 1 }}>
-                    <Select value="week" sx={{ fontSize: '0.75rem', color: 'text.secondary' }}>
-                      <MenuItem value="week">Esta Semana</MenuItem>
-                      <MenuItem value="month">Este Mes</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Box>
-              
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 4 }}>
-                <Box>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Incidencias Sin Resolver
-                  </Typography>
-                  <Typography variant="h3" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-                    6
-                  </Typography>
-                  <Typography variant="caption" sx={{ color: 'warning.main' }}>
-                    +2 desde ayer
-                  </Typography>
-                </Box>
-                <Box sx={{ textAlign: 'right' }}>
-                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                    Agentes Disponibles
-                  </Typography>
-                  <Typography variant="h3" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-                    8
-                  </Typography>
-                </Box>
-              </Box>
-
-              <Box>
-                <Typography variant="subtitle2" sx={{ color: 'text.primary', mb: 2 }}>
-                  Distribución por Sector
-                </Typography>
-                <Box sx={{ mb: 2 }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Sector A
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-                      2
-                    </Typography>
-                  </Box>
-                  <Box sx={{ width: '100%', height: 4, bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 2 }}>
-                    <Box sx={{ width: '33%', height: '100%', bgcolor: 'error.main', borderRadius: 2 }} />
-                  </Box>
-                </Box>
-                <Box sx={{ mb: 2 }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Sector B
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-                      3
-                    </Typography>
-                  </Box>
-                  <Box sx={{ width: '100%', height: 4, bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 2 }}>
-                    <Box sx={{ width: '50%', height: '100%', bgcolor: 'warning.main', borderRadius: 2 }} />
-                  </Box>
-                </Box>
-                <Box>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                      Sector C
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-                      1
-                    </Typography>
-                  </Box>
-                  <Box sx={{ width: '100%', height: 4, bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 2 }}>
-                    <Box sx={{ width: '17%', height: '100%', bgcolor: 'info.main', borderRadius: 2 }} />
-                  </Box>
-                </Box>
-              </Box>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-
-      {/* Bottom Section */}
-      <Grid container spacing={3}>
-        {/* Weekly Summary Chart */}
         <Grid item xs={12} md={8}>
-          <Card sx={{ bgcolor: 'background.paper' }}>
-            <CardContent sx={{ p: 3 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-                <Box>
-                  <Typography variant="h6" sx={{ color: 'text.primary', fontWeight: 'bold' }}>
-                    Resumen Semanal
-                  </Typography>
-                  <Box sx={{ display: 'flex', gap: 2, mt: 1 }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Box sx={{ width: 12, height: 12, bgcolor: 'primary.main', borderRadius: '50%', mr: 1 }} />
-                      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                        Incidencias
-                      </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Box sx={{ width: 12, height: 12, bgcolor: 'success.main', borderRadius: '50%', mr: 1 }} />
-                      <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                        Resueltas
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                <FormControl size="small">
-                  <Select value="7days" sx={{ color: 'text.secondary' }}>
-                    <MenuItem value="7days">Últimos 7 días</MenuItem>
-                    <MenuItem value="30days">Últimos 30 días</MenuItem>
-                  </Select>
-                </FormControl>
-              </Box>
-              
-              <Box sx={{ height: 300 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={weeklyData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
-                    <XAxis 
-                      dataKey="day" 
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: '#94a3b8', fontSize: 12 }}
-                    />
-                    <YAxis 
-                      axisLine={false}
-                      tickLine={false}
-                      tick={{ fill: '#94a3b8', fontSize: 12 }}
-                    />
-                    <Bar dataKey="incidents" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="resolved" fill="#10b981" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </Box>
+          <Card sx={{ bgcolor: 'background.paper', height: 400 }}>
+            <CardContent sx={{ p: 3, height: '100%' }}>
+              <Typography variant="h6" sx={{ color: 'text.primary', fontWeight: 'bold', mb: 3 }}>
+                Incidencias por Día
+              </Typography>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={weeklyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+                  <XAxis dataKey="day" stroke="#64748b" />
+                  <YAxis stroke="#64748b" />
+                  <Bar dataKey="incidents" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="resolved" fill="#10b981" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* Recent Incidents */}
         <Grid item xs={12} md={4}>
-          <Card sx={{ bgcolor: 'background.paper' }}>
-            <CardContent sx={{ p: 3 }}>
+          <Card sx={{ bgcolor: 'background.paper', height: 400 }}>
+            <CardContent sx={{ p: 3, height: '100%' }}>
               <Typography variant="h6" sx={{ color: 'text.primary', fontWeight: 'bold', mb: 3 }}>
-                Incidencias Recientes
+                Tiempo de Respuesta por Prioridad
               </Typography>
-              
-              <Box sx={{ maxHeight: 350, overflow: 'auto' }}>
-                {recentIncidents.map((incident, index) => (
-                  <Box key={incident.id} sx={{ 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    py: 2,
-                    borderBottom: index < recentIncidents.length - 1 ? '1px solid rgba(255,255,255,0.1)' : 'none'
-                  }}>
-                    <Avatar sx={{ 
-                      bgcolor: getPriorityColor(incident.priority), 
-                      width: 32, 
-                      height: 32, 
-                      mr: 2,
-                      fontSize: '0.75rem'
-                    }}>
-                      {incident.type.substring(0, 2)}
-                    </Avatar>
-                    <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography variant="body2" sx={{ 
-                        color: 'text.primary', 
-                        fontWeight: 500,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
-                      }}>
-                        {incident.type}
-                      </Typography>
-                      <Typography variant="caption" sx={{ 
-                        color: 'text.secondary',
-                        display: 'block',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
-                      }}>
-                        {incident.location}
-                      </Typography>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
-                        <Chip 
-                          label={incident.status} 
-                          size="small" 
-                          color={getStatusColor(incident.status)}
-                          sx={{ fontSize: '0.7rem', height: 20 }}
-                        />
-                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                          {incident.time}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Box>
-                ))}
-              </Box>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={responseTimeData}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={80}
+                    dataKey="value"
+                    label={({ name, value }) => `${name}: ${value}%`}
+                  >
+                    {responseTimeData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
         </Grid>
       </Grid>
+
+      {/* Recent Incidents Table */}
+      <Card sx={{ bgcolor: 'background.paper' }}>
+        <CardContent sx={{ p: 3 }}>
+          <Typography variant="h6" sx={{ color: 'text.primary', fontWeight: 'bold', mb: 3 }}>
+            Incidencias Recientes
+          </Typography>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 'bold' }}>Tipo</TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 'bold' }}>Ubicación</TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 'bold' }}>Hora</TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 'bold' }}>Estado</TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 'bold' }}>Agente</TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 'bold' }}>Prioridad</TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontWeight: 'bold' }}>Acciones</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {recentIncidents.map((incident) => (
+                  <TableRow key={incident.id} sx={{ '&:hover': { bgcolor: 'rgba(255,255,255,0.05)' } }}>
+                    <TableCell sx={{ color: 'text.primary' }}>{incident.type}</TableCell>
+                    <TableCell sx={{ color: 'text.primary' }}>{incident.location}</TableCell>
+                    <TableCell sx={{ color: 'text.secondary' }}>{incident.time}</TableCell>
+                    <TableCell>
+                      <Chip 
+                        label={incident.status} 
+                        color={getStatusColor(incident.status)}
+                        size="small"
+                        sx={{ fontSize: '0.75rem' }}
+                      />
+                    </TableCell>
+                    <TableCell sx={{ color: 'text.primary' }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Avatar sx={{ width: 24, height: 24, bgcolor: 'primary.main', fontSize: '0.7rem' }}>
+                          {incident.agent.charAt(0)}
+                        </Avatar>
+                        {incident.agent}
+                      </Box>
+                    </TableCell>
+                    <TableCell>
+                      <Box sx={{ 
+                        width: 12, 
+                        height: 12, 
+                        borderRadius: '50%', 
+                        bgcolor: getPriorityColor(incident.priority) 
+                      }} />
+                    </TableCell>
+                    <TableCell>
+                      <IconButton size="small" sx={{ color: 'text.secondary' }}>
+                        <MoreVertical size={16} />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </CardContent>
+      </Card>
+
+      {/* Additional spacing for scroll */}
+      <Box sx={{ height: 100 }} />
     </Box>
   );
 };
